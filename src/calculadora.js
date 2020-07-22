@@ -1,16 +1,57 @@
 import React, {useState} from 'react'
 import './calculadora.css'
 import {Jumbotron, Container, Row, Col, Button, Form} from 'react-bootstrap'
+import CalculadoraService from './calculadora.service'
 
 function Calculadora() {
   const [txtNumeros, setTxtNumeros] = useState('0')
+  const [txtNumero1, setTxtNumero1] = useState('0')
+  const [txtNumero2, setTxtNumero2] = useState(null)
+  const [txtOperacao, setTxtOperacao] = useState(null)
+
+  const [calcular, concatenarNumero, SOMA, SUB, DIV, MULT] = CalculadoraService()
+
 
   function definirOperacao(op){
-      setTxtNumeros(op)
+      if(txtOperacao === null) {
+        setTxtOperacao(op)
+        return
+      }
+      if(txtNumero2 !== null){
+          const resultado = calcular(parseFloat(txtNumero1), parseFloat(txtNumero2), op)
+          setTxtOperacao(op)
+          setTxtNumero1(resultado.toString())
+          setTxtNumero2(null)
+          setTxtNumeros(resultado)
+      }
   }
 
+  function limpar(){
+    setTxtOperacao(null)
+    setTxtNumero1('0')
+    setTxtNumero2(null)
+    setTxtNumeros('0')
+  }
+
+  function acaoCalcular(){
+    if(txtNumero2 ===  null) return
+
+    const resultado = calcular(parseFloat(txtNumero1), parseFloat(txtNumero2), txtOperacao)
+    setTxtNumeros(resultado)
+  } 
+
   function adicionarNumero(numero){
-        setTxtNumeros(txtNumeros + numero)
+      let resultado
+      if(txtOperacao === null) {
+          resultado = concatenarNumero(txtNumero1, numero ) 
+          setTxtNumero1(resultado)
+      }
+      else {
+          resultado = concatenarNumero(txtNumero2, numero ) 
+          setTxtNumero2(resultado)
+      }
+
+      setTxtNumeros(resultado)
   }
 
   return (
@@ -25,7 +66,7 @@ function Calculadora() {
         <Container>
             <Row>
                 <Col xs={3}>
-                    <Button variant="danger">C</Button>
+                    <Button variant="danger" onClick={limpar}>C</Button>
                 </Col>
                 <Col xs={9}>
                     <Form.Control type="text" name="txtNumero" className="text-right" readOnly="readonly" value={txtNumeros}/>
@@ -83,10 +124,10 @@ function Calculadora() {
                     <Button variant="light" onClick={()=>adicionarNumero('0')}>0</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="light">.</Button>
+                    <Button variant="light" onClick={()=>adicionarNumero('.')}>.</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="success">=</Button>
+                    <Button variant="success" onClick={acaoCalcular}>=</Button>
                 </Col>
                 <Col xs={3}>
                     <Button variant="warning"  onClick={()=>definirOperacao('+')}>+</Button>
