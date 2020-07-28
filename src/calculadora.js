@@ -69,7 +69,7 @@ function Calculadora() {
                     <Button variant="danger" onClick={limpar}>C</Button>
                 </Col>
                 <Col xs={9}>
-                    <Form.Control type="text" name="txtNumero" className="text-right" readOnly="readonly" value={txtNumeros}/>
+                    <Form.Control type="text" name="txtNumero" className="text-right" readOnly="readonly" value={txtNumeros} data-testid="txtNumeros"/>
                 </Col>
             </Row>
 
@@ -85,7 +85,7 @@ function Calculadora() {
                     <Button variant="light" onClick={()=>adicionarNumero('9')}>9</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="warning" onClick={()=>definirOperacao('/')}>/</Button>
+                    <Button variant="warning" onClick={()=>definirOperacao(DIV)}>/</Button>
                 </Col>
             </Row>
 
@@ -100,7 +100,7 @@ function Calculadora() {
                     <Button variant="light" onClick={()=>adicionarNumero('6')}>6</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="warning"  onClick={()=>definirOperacao('*')}>*</Button>
+                    <Button variant="warning"  onClick={()=>definirOperacao(MULT)}>*</Button>
                 </Col>
             </Row>
 
@@ -115,7 +115,7 @@ function Calculadora() {
                     <Button variant="light" onClick={()=>adicionarNumero('3')}>3</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="warning"  onClick={()=>definirOperacao('-')}>-</Button>
+                    <Button variant="warning"  onClick={()=>definirOperacao(SUB)}>-</Button>
                 </Col>
             </Row>
 
@@ -130,7 +130,7 @@ function Calculadora() {
                     <Button variant="success" onClick={acaoCalcular}>=</Button>
                 </Col>
                 <Col xs={3}>
-                    <Button variant="warning"  onClick={()=>definirOperacao('+')}>+</Button>
+                    <Button variant="warning"  onClick={()=>definirOperacao(SOMA)}>+</Button>
                 </Col>
             </Row>
         </Container>
